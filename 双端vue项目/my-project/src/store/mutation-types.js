@@ -1,0 +1,3 @@
+export const GET_HOTILLNESSLIST = 'GET_HOTILLNESSLIST'
+export const SET_NUM = 'SET_NUM'
+
