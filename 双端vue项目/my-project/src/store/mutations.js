@@ -10,6 +10,5 @@ export default {
     },
     [SET_NUM](state, num) {
             state.data += num;
-            console.log(state.data)
     },
 }
