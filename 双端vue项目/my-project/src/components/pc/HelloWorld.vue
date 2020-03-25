@@ -1,6 +1,6 @@
 <template>
   <div class="pc">
-    <h1>{{ msg }}</h1>
+    <!-- <h1>{{ msg }}</h1> -->
     <button @click="go">跳转到第二个页面</button>
     <!-- <div v-for='{{}}}'></div> -->
   </div>
@@ -30,10 +30,9 @@ export default {
           params.pageSize = 15;
           this.$store.dispatch('getHomeList', params);  //调用mapActions方法
     },
-
-
     go() {
         this.SET_NUM(1)  //调用mutations方法
+        console.log(this.$store.state.num)
       // let data = { name: "张三" };
       // this.$util.router_push(this, "secondPage", data);
     }

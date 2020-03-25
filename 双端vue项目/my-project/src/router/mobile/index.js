@@ -1,17 +1,26 @@
 // 手机入口
 import Vue from 'vue'
 import Router from 'vue-router'
-const HelloWorld = r => require.ensure([], () => r(require('@/components/mobile/HelloWorld')), 'HelloWorld')
-const mobilePage = r => require.ensure([], () => r(require('@/components/mobile/mobilePage')), 'mobilePage')
+const home = r => require.ensure([], () => r(require('@/components/mobile/home')), 'home')
+const may = r => require.ensure([], () => r(require('@/components/mobile/may')), 'may')
 
 Vue.use(Router)
 
 let router = new Router({
+  base: __dirname,
+  // linkActiveClass: 'active', // 更改激活状态的Class值
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'home',
+      keepAlive:false,
+      component: home
+    },
+    {
+      path: '/may',
+      name: 'may',
+      keepAlive:false,
+      component: may
     },
   ]
 })

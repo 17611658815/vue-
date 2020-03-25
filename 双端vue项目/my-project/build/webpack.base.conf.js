@@ -82,6 +82,7 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('media/[name].[hash:7].[ext]')
         }
+        
       },
       { // 对字体资源文件使用url-loader
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
@@ -90,7 +91,15 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      }
+      },
+      {
+        test: /\.sass$/,
+        loaders: ['style', 'css', 'sass']
+      },
+      {
+        test: /\.less$/,
+        loader: "style-loader!css-loader!less-loader"
+    },
     ]
   },
   node: {

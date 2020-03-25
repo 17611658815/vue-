@@ -8,6 +8,7 @@ Vue.use(Vuex)
 
 const state = {
 		num:0,
+		LOADING:false,//laoding开关
     data:[],//首页热门疾病
 }
 
