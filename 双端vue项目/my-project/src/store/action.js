@@ -1,7 +1,7 @@
 import {Api} from '../api/Api.js';
 import Toast from '../utils/toast.js';
 import {
-    GET_HOTILLNESSLIST,
+    SET_HOT_ILLNESS,
     SHOW_LOADING,
     HIDE_LOADING
 } from './mutation-types.js'
@@ -14,4 +14,9 @@ export default {
             Toast.hideLoading()
         });
     },
+    getHotIllness(store) {
+        Api.getHotIllness().then(data => {
+            store.commit(SET_HOT_ILLNESS, data.illness)
+        });
+    }
 }

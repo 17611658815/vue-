@@ -12,6 +12,12 @@ export const Api = {
      * 主页视频列表
      */
     getHomeList: function (paramObj) {
-        return getRequest('/api/listmore.json', paramObj);
+        return getRequest('/api/app/api/mfk_shipin_app2.php', paramObj);
+    },
+     /**
+     * 主页热门疾病
+     */
+    getHotIllness: function (paramObj) {
+        return getRequest('/api/app/api/mfk_shipin_app2.php?type=hot_illness', paramObj);
     },
 }

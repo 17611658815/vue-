@@ -8,8 +8,8 @@ Vue.use(Vuex)
 
 const state = {
 		num:0,
+		hot_illness:[],
 		LOADING:false,//laoding开关
-    data:[],//首页热门疾病
 }
 
 export default new Vuex.Store({

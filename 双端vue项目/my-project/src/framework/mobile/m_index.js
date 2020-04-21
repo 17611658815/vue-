@@ -11,7 +11,8 @@ import Util from '../../utils/util.js';
 import Toast from '../../utils/toast.js';
 import LogUtils from '../../utils/LogUtils.js';
 import router from '../../router/mobile/index';
-
+import { Lazyload } from "vant";
+Vue.use(Lazyload)
 Vue.use(Vant);
 Vue.prototype.$Api = Api; //挂在全局(请求)
 Vue.prototype.$util = Util;

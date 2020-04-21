@@ -1,8 +1,8 @@
 import {
     SET_NUM,
-    GET_HOTILLNESSLIST,
     SHOW_LOADING,
-    HIDE_LOADING
+    HIDE_LOADING,
+    SET_HOT_ILLNESS
 
 } from './mutation-types.js'
 
@@ -14,11 +14,10 @@ export default {
     [HIDE_LOADING] (state) {
         state.LOADING = false
     },
-
-    [GET_HOTILLNESSLIST](state, data) {
-		    state.data = data;
-    },
     [SET_NUM](state, num) {
-            state.num += num;
+        state.num += num;
+    },
+    [SET_HOT_ILLNESS](state, data) {
+        state.hot_illness = data;
     },
 }

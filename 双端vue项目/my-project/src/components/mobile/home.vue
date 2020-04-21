@@ -1,5 +1,6 @@
 <template>
-  <div class="home">
+  <div class="home" ref="imageWrapper">
+    <button @click="toImage()">保存图片</button>
     <div class="swiper-box">
       <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
         <van-swipe-item>
@@ -36,39 +37,107 @@
         <div>专家音频</div>
       </div>
     </div>
+    <illness-tag :illness="illness" :title="title"></illness-tag>
+    <video-module
+      :getHomeList="getHomeList"
+      :loading="loading"
+      :finished="finished"
+      :videoList="videoList"
+    ></video-module>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import illnessTag from "../../common/mobile/illnessTag.vue";
+import videoModule from "../../common/mobile/videoList.vue";
 import { mapState, mapActions, mapMutations } from "vuex";
+import html2canvas from 'html2canvas'
 export default {
   name: "home",
   data() {
-    return {};
+    return {
+      page: 1,
+      title: "热门疾病",
+      illness: [],
+      videoList: [],
+      loading: false,
+      finished: false
+    };
   },
   created() {
-    this.$Toast.showToast("错误");
-    this.getHomeList();
+    this.getHotIllness();
+    // this.getHomeList();
+  },
+  mounted() {},
+  computed: {
+    ...mapState(["hot_illness"])
   },
   methods: {
     // 引入mutations同步方法
     ...mapActions(["getHomeList"]),
-    ...mapMutations(["SHOW_LOADING", "HIDE_LOADING"]),
+    ...mapMutations(["SET_HOT_ILLNESS"]),
     //调用vuex方法
-    getHomeList() {
+    /*  getHomeList() {
       let params = new Object();
       params.pageNo = 3;
       params.pageSize = 15;
-      // this.$LoadingUtils.showLoading('加载中',true)
+      this.$Toast.showToast("错误");
+      this.$LoadingUtils.showLoading('加载中',true)
+      this.$util.router_push(this,'home') 路由跳转
       this.$store.dispatch("getHomeList", params); //调用mapActions方法
+    }, */
+    toImage() {
+      // html2canvas(this.$refs.imageWrapper, {
+      //   backgroundColor: null
+      // }).then(canvas => {
+      //   console.log(canvas)
+      //   let dataURL = canvas.toDataURL("image/png");
+      //   this.dataURL = dataURL;
+      // });
+       html2canvas(this.$refs.imageWrapper).then(canvas => {
+        // this.$refs.addImage.append(canvas);//在下面添加canvas节点
+        let link = document.createElement("a");
+        link.href = canvas.toDataURL();//下载链接
+        link.setAttribute("download","home.png");
+        link.style.display = "none";//a标签隐藏
+        document.body.appendChild(link);
+        link.click();
+      });
+    },
+    getHotIllness() {
+      this.$Api.getHotIllness().then(data => {
+        this.illness = data.illness;
+        this.SET_HOT_ILLNESS(data.illness);
+      });
+    },
+    getHomeList() {
+      let params = new Object();
+      params.type = "home_list";
+      params.page = this.page++;
+      this.loading = true;
+      this.$Api.getHomeList(params).then(data => {
+        this.loading = false;
+        if (data.list.length > 0) {
+          this.videoList = this.videoList.concat(data.list);
+        } else {
+          this.finished = true;
+        }
+      });
     }
+  },
+  components: {
+    illnessTag,
+    videoModule
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.home {
+  height: 100%;
+  padding-bottom: 1rem;
+}
 .swiper-box {
   width: 100%;
   height: 3.6rem;
@@ -96,13 +165,13 @@ export default {
   align-items: center;
   font-size: 0.28rem;
 }
-.type-list-item>div{
+.type-list-item > div {
   height: 0.7rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.type-list-item img{
+.type-list-item img {
   width: 0.6rem;
   height: 0.7rem;
 }

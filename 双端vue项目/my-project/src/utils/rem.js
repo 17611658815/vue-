@@ -9,7 +9,8 @@ function fnResize() {
   }
   if (deviceWidth <= 320) {
     deviceWidth = 320;
-  }
+	}
+	// 100px = 1rem
   document.documentElement.style.fontSize = (deviceWidth / 7.5) + 'px';
 }
 /*判断横竖屏*/
